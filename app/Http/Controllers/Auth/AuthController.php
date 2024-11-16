@@ -10,13 +10,6 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends BaseController
 {
-    /**
-     * Create a new AuthController instance
-     * @return void
-     */
-    // public function __construct(){
-    //     $this->middleware('auth:api',['expect'=> ['login']]);
-    // }
 
     public function index(){
         return response()->json([
@@ -32,7 +25,6 @@ class AuthController extends BaseController
     public function login(){
         $credentials = request(['email','password']);
 
-        // dd($credentials);
 
         if(!$token = JWTAuth::attempt($credentials))
         {
