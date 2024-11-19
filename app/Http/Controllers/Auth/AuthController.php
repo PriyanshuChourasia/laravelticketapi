@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use App\Http\Resources\Auth\AuthResource;
+use App\Http\Resources\User\UserResource;
 
 class AuthController extends BaseController
 {
@@ -25,20 +27,25 @@ class AuthController extends BaseController
     public function login(){
         $credentials = request(['email','password']);
 
-
         if(!$token = JWTAuth::attempt($credentials))
         {
-            return $this->sendError('Unauthorized',['error'=> 'Unauthorized']);
+            $response = [
+                'message'=>'Unauthorized',
+                'error'=>'Check your credentials',
+                'status'=>401
+            ];
+
+            return new AuthResource((object)$response);
         }
 
         $success = $this->responseWithToken($token);
 
-        return $this->sendResponse($success,'User login successfully');
+        return new AuthResource((object)$success);
     }
 
 
     public function register(Request $request){
-        
+
         $validator = Validator::make($request->all(),[
             'name'=>'required',
             'email'=> 'required',
@@ -64,17 +71,17 @@ class AuthController extends BaseController
 
 
     public function responseWithToken($token){
-        return response()->json([
+        return [
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60
-        ]);
+            'token_type'=> 'bearer',
+            'expires_in'=> JWTAuth::factory()->getTTL() * 60
+        ];
     }
 
 
 
     public function profile(){
-        $success = JWTAuth::user();
-        return $this->sendResponse($success,'Profile fetched successfully');
+        $user = JWTAuth::user();
+        return new UserResource(JWTAuth::user());
     }
 }
