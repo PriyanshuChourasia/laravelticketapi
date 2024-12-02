@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Auth\AuthLoginRequest;
+use App\Http\Requests\Auth\AuthRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -24,8 +26,10 @@ class AuthController extends BaseController
      * Get a JWT via given credentials
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(){
-        $credentials = request(['email','password']);
+    public function login(AuthLoginRequest $authLoginRequest){
+        // $credentials = request(['email','password']);
+
+        dd(!$token = JWTAuth::attempt($authLoginRequest));
 
         if(!$token = JWTAuth::attempt($credentials))
         {
@@ -44,28 +48,10 @@ class AuthController extends BaseController
     }
 
 
-    public function register(Request $request){
-
-        $validator = Validator::make($request->all(),[
-            'name'=>'required',
-            'email'=> 'required',
-            "password"=> 'required'
-        ]);
-
-        if($validator->fails()){
-            return $this->sendError("Validation Error.",$validator->errors());
-        }
-        else{
-            $user = new User();
-            $user->name = $request->input('name');
-            $user->email = $request->input('email');
-            $user->password = bcrypt($request->input('password'));
-
-            $user->save();
-            $success['user'] = $user;
-            return $this->sendResponse($success,"User Registered Successfully");
-        }
-
+    public function register(AuthRegisterRequest $authRegisterRequest){
+        $data = $authRegisterRequest->validated();
+        $authRegister = User::create($data);
+        return new UserResource($authRegister);
     }
 
 
