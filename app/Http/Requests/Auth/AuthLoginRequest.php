@@ -25,7 +25,7 @@ class AuthLoginRequest extends FormRequest
     {
         return [
             'email'=>['required','email'],
-            'password'=> ['password','required','string','min:8','max:255']
+            'password'=> ['required','string','min:8','max:255']
         ];
     }
 }

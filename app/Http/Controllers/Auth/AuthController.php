@@ -6,11 +6,10 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Auth\AuthLoginRequest;
 use App\Http\Requests\Auth\AuthRegisterRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use App\Http\Resources\Auth\AuthResource;
 use App\Http\Resources\User\UserResource;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends BaseController
 {
@@ -27,24 +26,48 @@ class AuthController extends BaseController
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(AuthLoginRequest $authLoginRequest){
-        // $credentials = request(['email','password']);
 
-        dd(!$token = JWTAuth::attempt($authLoginRequest));
+        //This line  of code is getting me the validation for the credentials entered;
+        $credentials = $authLoginRequest->validated();
+        // $userData = User::findOrFail($authLoginRequest('email'));
 
-        if(!$token = JWTAuth::attempt($credentials))
+
+
+        $token = Auth::attempt($credentials);
+        $user = Auth::guard('api')->user();
+
+
+        if(!$token)
         {
+
             $response = [
                 'message'=>'Unauthorized',
                 'error'=>'Check your credentials',
                 'status'=>401
             ];
 
-            return new AuthResource((object)$response);
+            return response()->json([
+                'error'=>$response
+            ]);
         }
 
-        $success = $this->responseWithToken($token);
+        $refreshToken = JWTAuth::customClaims(
+            [
+                'exp'=> now()->addDays(2)->timestamp,
+            ]
+        )->fromUser($user);
 
-        return new AuthResource((object)$success);
+
+
+
+        return response()->json([
+            'access_token'=> $token,
+            'refresh_token'=> $refreshToken,
+            'success' => true,
+            'status'=> '200'
+        ],200);
+
+        // return new AuthResource((object)$loginResponse);
     }
 
 

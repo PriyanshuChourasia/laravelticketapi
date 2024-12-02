@@ -14,17 +14,12 @@ class AuthResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if(!empty($this->access_token))
-        {
+
             return [
                 'access_token'=>$this->access_token,
                 'token_type'=> $this->token_type,
-                'expires_in'=>$this->expires_in,
             ];
-        }
-        else{
-            return [];
-        }
+
     }
 
 
@@ -35,8 +30,7 @@ class AuthResource extends JsonResource
      * @return array
      */
     public function with(Request $request){
-        if(empty($this->access_token))
-        {
+
             return[
                 'error'=>[
                     'message'=> $this->message ?? "An error occurred",
@@ -45,11 +39,6 @@ class AuthResource extends JsonResource
                 ],
                 'success'=> false,
             ];
-        }
-        else{
-            return[
-                'success'=> isset($this->access_token)
-            ];
-        }
+
     }
 }
