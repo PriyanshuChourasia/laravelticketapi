@@ -16,13 +16,13 @@ use App\Http\Middleware\AuthenticateUser;
 // })->middleware('auth:sanctum');
 
 
-Route::prefix('auth')->group(function(){
-    Route::post('/login',[AuthController::class,'login']);
-    Route::post('/register',[AuthController::class,'register']);
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
 });
 
 
-Route::apiResource('user_types',UserTypeController::class);
+Route::apiResource('user_types', UserTypeController::class);
 
 
 // Route::group(['middleware'=>['auth:api',VerifyToken::class]], function(){
@@ -31,11 +31,9 @@ Route::apiResource('user_types',UserTypeController::class);
 //         Route::get('/profile',[AuthController::class,'profile']);
 //     });
 // });
-Route::group(['middleware'=>[VerifyToken::class]], function(){
-    Route::prefix('auth')->group(function(){
-        Route::post('/refresh',[AuthController::class,'refresh']);
-        Route::get('/profile',[AuthController::class,'profile']);
+Route::group(['middleware' => [VerifyToken::class]], function () {
+    Route::prefix('auth')->group(function () {
+        Route::post('/refresh', [AuthController::class, 'refresh']);
+        Route::get('/profile', [AuthController::class, 'profile']);
     });
-
-
 });

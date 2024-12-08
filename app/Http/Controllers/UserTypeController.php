@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserType\UserTypeDeleteRequest;
 use App\Http\Requests\UserType\UserTypeRequest;
 use App\Http\Resources\UserType\UserTypeCollection;
 use App\Http\Resources\UserType\UserTypeResource;
@@ -21,9 +22,9 @@ class UserTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserTypeRequest $userTypeRequest)
+    public function store(UserTypeRequest $request)
     {
-        $data = $userTypeRequest->validated();
+        $data = $request->validated();
         $userType = UserType::create($data);
         return new UserTypeResource($userType);
     }
@@ -31,9 +32,9 @@ class UserTypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(UserType $userType)
     {
-        //
+        return new UserTypeResource($userType);
     }
 
     /**
@@ -47,8 +48,14 @@ class UserTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(UserType $userType)
     {
-        //
+        $userType->delete();
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'result' => 'Record has been deleted'
+            ]
+        ], 200);
     }
 }

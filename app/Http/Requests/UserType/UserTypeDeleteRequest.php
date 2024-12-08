@@ -4,14 +4,14 @@ namespace App\Http\Requests\UserType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserTypeRequest extends FormRequest
+class UserTypeDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,7 +22,7 @@ class UserTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => ["required", "string", 'unique:user_types,name']
+            'id' => ['required', 'exists:user_types,name']
         ];
     }
 }

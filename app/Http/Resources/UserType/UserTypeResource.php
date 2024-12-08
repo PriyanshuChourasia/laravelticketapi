@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources\UserType;
 
+use App\Http\Resources\Success\SuccessResource;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserTypeResource extends JsonResource
+class UserTypeResource extends SuccessResource
 {
     /**
      * Transform the resource into an array.
@@ -15,17 +15,8 @@ class UserTypeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=> $this->id,
-            'name'=> $this->name
-        ];
-    }
-
-
-    public function with(Request $request): array
-    {
-        return[
-            'success'=> true,
-            'status'=> 201
+            'id' => $this->id,
+            'name' => $this->name
         ];
     }
 }
