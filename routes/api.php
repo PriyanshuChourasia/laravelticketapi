@@ -22,7 +22,7 @@ Route::prefix('auth')->group(function () {
 });
 
 
-Route::apiResource('user_types', UserTypeController::class);
+
 
 
 // Route::group(['middleware'=>['auth:api',VerifyToken::class]], function(){
@@ -36,4 +36,5 @@ Route::group(['middleware' => [VerifyToken::class]], function () {
         Route::post('/refresh', [AuthController::class, 'refresh']);
         Route::get('/profile', [AuthController::class, 'profile']);
     });
+    Route::apiResource('user_types', UserTypeController::class);
 });

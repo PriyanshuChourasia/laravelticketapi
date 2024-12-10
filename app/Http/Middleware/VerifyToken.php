@@ -17,25 +17,24 @@ class VerifyToken
     public function handle(Request $request, Closure $next): Response
     {
         $token = $request->header('Authorization');
-        if(!$token){
+        if (!$token) {
             return response()->json([
-                'error'=>'No Token Provided',
-                'message'=>'Authorization Token is required',
-                'status'=>401
-            ]);
-        }
-        else if($token)
-        {
+                'error' => [
+                    'message' => 'Authorization Token is required',
+                ],
+                'success' => false
+            ], 401);
+        } else if ($token) {
             $user = JWTAuth::user();
             if (!$user) {
                 return response()->json([
-                    'error' => 'Invalid Token',
-                    'message' => 'The provided token is invalid.',
-                    'status'=> 401
+                    'error' => [
+                        'message' => 'The provided token is invalid.',
+                    ],
+                    'success' => false
                 ], 401);
             }
         }
-            return $next($request);
-
+        return $next($request);
     }
 }

@@ -91,12 +91,18 @@ class User extends Authenticatable implements JWTSubject
 
     // But will face an error while creating new record. To solve this issue you have to define a UUID each time you create a new record
 
-    public static function boot(){
+    public static function boot()
+    {
         parent::boot();
 
-        static::creating(function($model){
+        static::creating(function ($model) {
             $model->id = Str::uuid();
         });
     }
 
+
+    public function user_types()
+    {
+        return $this->belongsTo(UserType::class, 'user_type_id', 'id');
+    }
 }

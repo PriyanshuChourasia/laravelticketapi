@@ -17,12 +17,13 @@ class UserType extends Model
 
 
     protected $keyType = 'string';
-    public $incrementing= false;
+    public $incrementing = false;
 
-    public static function boot(){
+    public static function boot()
+    {
         parent::boot();
 
-        static::creating(function($model){
+        static::creating(function ($model) {
             $model->id = Str::uuid();
         });
     }

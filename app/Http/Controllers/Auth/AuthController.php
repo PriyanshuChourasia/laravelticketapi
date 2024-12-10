@@ -9,11 +9,13 @@ use App\Models\User;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use App\Http\Resources\Auth\AuthResource;
 use App\Http\Resources\User\UserResource;
+use App\Models\UserType;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends BaseController
 {
 
+    protected $userLoader = ['user_types'];
     public function index()
     {
         return response()->json([
@@ -98,6 +100,6 @@ class AuthController extends BaseController
     public function profile()
     {
         $user = JWTAuth::user();
-        return new UserResource(JWTAuth::user());
+        return new UserResource($user->load($this->userLoader));
     }
 }
