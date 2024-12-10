@@ -19,7 +19,7 @@ class VerifyToken
         $token = $request->header('Authorization');
         if (!$token) {
             return response()->json([
-                'error' => [
+                'errors' => [
                     'message' => 'Authorization Token is required',
                 ],
                 'success' => false
@@ -28,7 +28,7 @@ class VerifyToken
             $user = JWTAuth::user();
             if (!$user) {
                 return response()->json([
-                    'error' => [
+                    'errors' => [
                         'message' => 'The provided token is invalid.',
                     ],
                     'success' => false
