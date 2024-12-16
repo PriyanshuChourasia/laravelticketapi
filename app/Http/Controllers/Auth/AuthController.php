@@ -84,6 +84,24 @@ class AuthController extends BaseController
         return new UserResource($authRegister);
     }
 
+    // This function will called when the access token will get expire and it will generated to provide new access_token and refresh_token
+    public function respondWithNewTokens()
+    {
+        $user = Auth::user();
+        $access_Token = Auth::tokenById($user->id);
+        $refresh_Token = JWTAuth::customClaims(
+            [
+                'exp' => now()->addDays(4)->timestamp,
+            ]
+        )->fromUser($user);
+
+        return response()->json([
+            'access_token' => $access_Token,
+            'refresh_token' => $refresh_Token,
+            'success' => true
+        ], 200);
+    }
+
 
 
     public function responseWithToken($token)

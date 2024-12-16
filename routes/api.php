@@ -33,7 +33,7 @@ Route::prefix('auth')->group(function () {
 // });
 Route::group(['middleware' => [VerifyToken::class]], function () {
     Route::prefix('auth')->group(function () {
-        Route::post('/refresh', [AuthController::class, 'refresh']);
+        Route::get('/refresh', [AuthController::class, 'respondWithNewTokens']);
         Route::get('/profile', [AuthController::class, 'profile']);
     });
     Route::apiResource('user_types', UserTypeController::class);
