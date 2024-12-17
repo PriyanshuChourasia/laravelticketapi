@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Designation extends Model
+class StatusType extends Model
 {
     use HasUuids, SoftDeletes;
 

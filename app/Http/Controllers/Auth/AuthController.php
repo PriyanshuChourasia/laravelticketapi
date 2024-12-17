@@ -96,8 +96,11 @@ class AuthController extends BaseController
         )->fromUser($user);
 
         return response()->json([
-            'access_token' => $access_Token,
-            'refresh_token' => $refresh_Token,
+            'data' => [
+                'access_token' => $access_Token,
+                'refresh_token' => $refresh_Token,
+                'status' => '200'
+            ],
             'success' => true
         ], 200);
     }
