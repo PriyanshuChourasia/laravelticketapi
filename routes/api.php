@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\StatusTypeController;
 use App\Http\Controllers\UserTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +38,5 @@ Route::group(['middleware' => [VerifyToken::class]], function () {
         Route::get('/profile', [AuthController::class, 'profile']);
     });
     Route::apiResource('user_types', UserTypeController::class);
+    Route::apiResource('status_types', StatusTypeController::class);
 });

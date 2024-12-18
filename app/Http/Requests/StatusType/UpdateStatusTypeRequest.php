@@ -4,7 +4,7 @@ namespace App\Http\Requests\StatusType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreStatusTypeRequest extends FormRequest
+class UpdateStatusTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class StoreStatusTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['string', 'required', 'unique:status_types,name']
+            'name' => ['string', 'required']
         ];
     }
 }

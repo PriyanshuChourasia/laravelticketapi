@@ -12,6 +12,11 @@ class StatusType extends Model
     use HasUuids, SoftDeletes;
 
 
+    protected $fillable = [
+        'name'
+    ];
+
+
     protected $keyType = 'string';
     public $incrementing = false;
 
