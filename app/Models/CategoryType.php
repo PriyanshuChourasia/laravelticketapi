@@ -11,6 +11,11 @@ class CategoryType extends Model
 {
     use HasUuids, SoftDeletes;
 
+    protected $fillable = [
+        'categories_id',
+        'name'
+    ];
+
 
     protected $keyType = 'string';
     public $incrementing = false;
