@@ -1,0 +1,4 @@
+# Category Model
+
+* id
+* name

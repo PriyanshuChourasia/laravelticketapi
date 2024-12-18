@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CategoryTypeController;
 use App\Http\Controllers\StatusTypeController;
 use App\Http\Controllers\UserTypeController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\VerifyToken;
-use App\Http\Middleware\AuthenticateUser;
+use App\Models\CategoryType;
 
 /**
  * The example api
@@ -32,6 +33,7 @@ Route::prefix('auth')->group(function () {
 //         Route::get('/profile',[AuthController::class,'profile']);
 //     });
 // });
+
 Route::group(['middleware' => [VerifyToken::class]], function () {
     Route::prefix('auth')->group(function () {
         Route::get('/refresh', [AuthController::class, 'respondWithNewTokens']);
@@ -39,4 +41,9 @@ Route::group(['middleware' => [VerifyToken::class]], function () {
     });
     Route::apiResource('user_types', UserTypeController::class);
     Route::apiResource('status_types', StatusTypeController::class);
+
+    // This is the parent model which will have the issues category types like Technical Issues
+    Route::apiResource('categories', CategoryController::class);
+    // This is the sub parent model which will have the issues which will be the child Model
+    Route::apiResource('category_types', CategoryTypeController::class);
 });
