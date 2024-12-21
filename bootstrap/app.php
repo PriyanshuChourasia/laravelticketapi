@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\ServicePattern;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
+    ->withCommands([
+        ServicePattern::class
+    ])
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->use([
             //    'verify.token' => App\Http\Middleware\VerifyToken::class
