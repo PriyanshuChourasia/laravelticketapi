@@ -1,0 +1,13 @@
+<?php
+
+namespace {{ namespace }}
+
+
+interface {{ serviceInterface }}
+{
+    public function getAll();
+    public function getById(string $id);
+    public function store();
+    public function update();
+    public function destroy();
+}

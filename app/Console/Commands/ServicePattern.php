@@ -43,7 +43,25 @@ class ServicePattern extends Command
         // Take input from artisan command
         $path  = $this->argument('path');
         $pathArray = explode('/', $path);
-        // dd($pathArray);
+
+
+        // Custom Stub will be used to generate this file
+        $stubServicePath = resource_path('stubs/service.stub');
+        $stubInterfacePath = resource_path('stubs/serviceInterface.stub');
+
+
+
+        // Stub content is being loaded and modified;
+        $sContent = file_get_contents($stubServicePath);
+        $serviceContent = str_replace(
+            ['{{className}}', '{{classInterface}}'],
+            [$this->fileName, 'I' . $this->fileName],
+            $sContent
+        );
+
+
+
+
 
 
         if (count($pathArray) > 1) {
@@ -54,6 +72,8 @@ class ServicePattern extends Command
             $filterFolder = array_filter($folder);
 
             $this->fileName = array_pop($filterFolder);
+            dd($this->fileName);
+            return;
             $this->folders = implode('/', $filterFolder);
         } else {
             $this->fileName = $path;
