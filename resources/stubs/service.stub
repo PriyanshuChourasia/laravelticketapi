@@ -3,6 +3,10 @@
 namespace {{ namespace }};
 
 
+
+use {{ classInterfacePath }};
+
+
 class {{ className }} implements {{ classInterface }}
 {
     /**
@@ -18,7 +22,7 @@ class {{ className }} implements {{ classInterface }}
      /**
     *   Get a new resource by Id
     */
-    public function getById()
+    public function getById(string $id)
     {
 
     }
