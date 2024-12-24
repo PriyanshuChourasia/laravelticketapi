@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace {{ namespace }};
 
 use Illuminate\Support\ServiceProvider;
 
-class ServicesServiceProvider extends ServiceProvider
+class {{ class }} extends ServiceProvider
 {
     /**
      * Register services.
@@ -19,6 +19,6 @@ class ServicesServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //Your code here 
+        $this-app()->bind({{ serviceInterface }}::class, {{ service }}::class);
     }
 }

@@ -30,6 +30,7 @@ class ServicePattern extends Command
 
     public string $fileName = '';
     public string $folders = '';
+    public string $serviceProvider = '';
 
 
 
@@ -41,16 +42,11 @@ class ServicePattern extends Command
 
         $folderPrefixName = 'Services';
         $folderInterfacePrefix = 'Interfaces';
+        $this->serviceProvider = 'ServicesServiceProvider';
         // Take input from artisan command
         $path  = $this->argument('path');
         $pathArray = explode('/', $path);
 
-
-        // $absolute_path = realpath("app/Providers/ServicesServiceProvider.php");
-
-        // dd($absolute_path);
-
-        // return;
 
 
 
@@ -69,6 +65,55 @@ class ServicePattern extends Command
             $this->fileName = $path;
         }
 
+        $providerPath =  base_path('app/Providers/');
+        $providerFilePath = $providerPath . DIRECTORY_SEPARATOR . $this->serviceProvider . '.php';
+
+
+
+        if (!File::exists($providerFilePath)) {
+            echo $this->serviceProvider;
+            File::put($providerFilePath, "<?php namespace // File created");
+            $this->info("Provider created successfully");
+        } else {
+            $this->warn('File aready exists');
+        }
+
+        $classNamePath = "App\\Providers\\{$this->serviceProvider}";
+
+        if (class_exists($classNamePath)) {
+            $hasBootMethod = method_exists($classNamePath, 'boot');
+            if ($hasBootMethod) {
+                $fileContent = File::get($providerFilePath);
+                $bootMethodPosition = strpos($fileContent, 'public function boot()');
+                $methodEndPosition = strpos($fileContent, '}', $bootMethodPosition);
+                $bootMethodContent = substr($fileContent, $bootMethodPosition, $methodEndPosition - $bootMethodPosition + 1);
+                $newBootContent = str_replace(
+                    '}',
+                    "\n \$this->app->bind({$this->fileName}::class);\n
+                }",
+                    $bootMethodContent
+                );
+
+                $updatedContent = str_replace($bootMethodContent, $newBootContent, $fileContent);
+
+                File::put($providerFilePath, $updatedContent);
+
+                $this->info("Code added to the boot method successfully.");
+            } else {
+                $this->warn('Boot method does not exist in the class.');
+            }
+        } else {
+            $this->error("The class name {$classNamePath}");
+        }
+
+
+
+
+
+
+
+        return;
+
 
         // Namespace
         $namespace = 'App\\' . $folderPrefixName . ($this->folders ? '\\' . str_replace('/', '\\', $this->folders) : '');
@@ -78,6 +123,10 @@ class ServicePattern extends Command
         // Custom Stub will be used to generate this file
         $stubServicePath = resource_path('stubs/service.stub');
         $stubInterfacePath = resource_path('stubs/serviceInterface.stub');
+
+        // Service Provider file path
+
+
 
 
 
