@@ -64,7 +64,7 @@ class AuthController extends BaseController
         $loginResponse = [
             'access_token' => $token,
             'refresh_token' => $refreshToken,
-            'status' => '200',
+            'status' => 200,
         ];
 
 
