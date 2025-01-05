@@ -22,10 +22,10 @@ class AuthRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=> ['required','string','max:255'],
-            'email'=> ['required','email','unique:users,email'],
-            'password' => ['required','min:7','max:255'],
-            'user_type_id'=>['string','required']
+            'username' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:7', 'max:255'],
+            'user_type_id' => ['string', 'required']
         ];
     }
 }

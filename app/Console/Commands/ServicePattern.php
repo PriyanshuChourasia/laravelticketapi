@@ -112,7 +112,6 @@ class ServicePattern extends Command
 
 
 
-        return;
 
 
         // Namespace

@@ -51,8 +51,8 @@ class AuthController extends BaseController
 
             return response()->json([
                 'error' => $response,
-                'success' => false
-            ]);
+                'success' => true
+            ], 401);
         }
 
         $refreshToken = JWTAuth::customClaims(

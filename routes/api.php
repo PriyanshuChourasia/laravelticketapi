@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryTypeController;
 use App\Http\Controllers\StatusTypeController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserTypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\VerifyToken;
@@ -24,7 +25,7 @@ Route::prefix('auth')->group(function () {
 });
 
 
-
+// Route::apiResource('user_types', UserTypeController::class);
 
 
 // Route::group(['middleware'=>['auth:api',VerifyToken::class]], function(){
@@ -46,4 +47,7 @@ Route::group(['middleware' => [VerifyToken::class]], function () {
     Route::apiResource('categories', CategoryController::class);
     // This is the sub parent model which will have the issues which will be the child Model
     Route::apiResource('category_types', CategoryTypeController::class);
+
+    // Tasks Controller is used to control tasks
+    Route::apiResource('tasks', TaskController::class);
 });

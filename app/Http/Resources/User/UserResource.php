@@ -17,7 +17,7 @@ class UserResource extends SuccessResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'username' => $this->username,
             'email' => $this->email,
             'user_type' => new UserTypeResource($this->whenLoaded('user_types')),
         ];
