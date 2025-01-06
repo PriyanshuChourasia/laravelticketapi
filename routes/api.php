@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryTypeController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\StatusTypeController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserTypeController;
@@ -50,4 +51,8 @@ Route::group(['middleware' => [VerifyToken::class]], function () {
 
     // Tasks Controller is used to control tasks
     Route::apiResource('tasks', TaskController::class);
+
+
+    // Store Items
+    Route::apiResource('items', ItemController::class);
 });
