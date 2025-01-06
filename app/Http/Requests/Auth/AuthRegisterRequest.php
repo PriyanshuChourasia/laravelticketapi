@@ -25,7 +25,14 @@ class AuthRegisterRequest extends FormRequest
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'min:7', 'max:255'],
-            'user_type_id' => ['string', 'required']
+            'user_type_id' => ['string', 'nullable']
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_type_id' => $this->input('user_type_id', '3b781758-3eec-4ddd-bb0d-ad8a8fec8590')
+        ]);
     }
 }
