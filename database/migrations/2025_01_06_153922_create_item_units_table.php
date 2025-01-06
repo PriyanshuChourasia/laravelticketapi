@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('item_units', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('cost');
-            $table->string('qtn')->comment('quantity')->default('1');
-            $table->foreignUuid('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignUuid('item_unit_id')->nullable()->references('id')->on('item_units')->onUpdate('cascade')->nullOnUpdate()->onDelete('cascade')->nullOnDelete();
+            $table->string('alias')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('item_units');
     }
 };

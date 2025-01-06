@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryTypeController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemUnitController;
 use App\Http\Controllers\StatusTypeController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserTypeController;
@@ -55,4 +56,7 @@ Route::group(['middleware' => [VerifyToken::class]], function () {
 
     // Store Items
     Route::apiResource('items', ItemController::class);
+
+    // Store Item units
+    Route::apiResource('item_units', ItemUnitController::class);
 });

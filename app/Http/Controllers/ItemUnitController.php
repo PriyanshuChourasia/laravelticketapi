@@ -2,33 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ItemRequest\ItemStoreRequest;
-use App\Services\ItemService;
+use App\Http\Requests\ItemUnit\ItemUnitStoreRequest;
+use App\Services\ItemUnitService;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class ItemUnitController extends Controller
 {
-
-    protected $itemService;
-
-    public function __construct(ItemService $itemService)
+    protected $itemUnitService;
+    public function __construct(ItemUnitService $itemUnitService)
     {
-        $this->itemService = $itemService;
+        $this->itemUnitService = $itemUnitService;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return $this->itemService->getAll();
+        return $this->itemUnitService->getAll();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemStoreRequest $itemStoreRequest)
+    public function store(ItemUnitStoreRequest $request)
     {
-        return $this->itemService->store($itemStoreRequest);
+        return $this->itemUnitService->store($request);
     }
 
     /**
@@ -36,7 +34,7 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
-        return $this->itemService->getById($id);
+        return $this->itemUnitService->getById($id);
     }
 
     /**
@@ -52,6 +50,6 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        return $this->itemService->destroy($id);
+        return $this->itemUnitService->destroy($id);
     }
 }

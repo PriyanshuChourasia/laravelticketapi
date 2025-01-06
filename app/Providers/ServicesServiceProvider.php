@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Services\Interfaces\IItemService;
+use App\Services\Interfaces\IItemUnitService;
 use App\Services\Interfaces\ITaskService;
 use App\Services\ItemService;
+use App\Services\ItemUnitService;
 use App\Services\TaskService;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +30,7 @@ class ServicesServiceProvider extends ServiceProvider
         $this->app->bind(TaskService::class, ITaskService::class);
 
         $this->app->bind(IItemService::class, ItemService::class);
+
+        $this->app->bind(IItemUnitService::class, ItemUnitService::class);
     }
 }

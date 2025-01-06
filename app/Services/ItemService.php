@@ -5,9 +5,10 @@ namespace App\Services;
 use App\Http\Requests\ItemRequest\ItemStoreRequest;
 use App\Http\Resources\Item\ItemCollection;
 use App\Http\Resources\Item\ItemResource;
+use App\Http\Resources\User\UserResource;
 use App\Models\Item;
 use App\Services\Interfaces\IItemService;
-
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class ItemService implements IItemService
 {
@@ -24,7 +25,12 @@ class ItemService implements IItemService
     /**
      *   Get a new resource by Id
      */
-    public function getById(string $id) {}
+    public function getById(string $id)
+    {
+
+        $data = Item::all()->where('user_id', $id);
+        return new ItemCollection($data);
+    }
 
 
     /**
@@ -40,7 +46,10 @@ class ItemService implements IItemService
                 Item::create($value);
             }
         }
-        return new ItemCollection(Item::all());
+
+        $id = JWTAuth::user()->id;
+        $itemdata = Item::all()->where('user_id', $id);
+        return new ItemCollection($itemdata);
     }
 
 
@@ -55,5 +64,13 @@ class ItemService implements IItemService
     /**
      *   Delete a specified resource
      */
-    public function destroy() {}
+    public function destroy($id)
+    {
+        $data = Item::findOrFail($id);
+        $data->delete();
+        return response()->json([
+            'message' => 'Record deleted successfully',
+            'status' => 200
+        ], 200);
+    }
 }
