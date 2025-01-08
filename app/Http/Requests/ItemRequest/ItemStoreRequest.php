@@ -37,8 +37,6 @@ class ItemStoreRequest extends FormRequest
         $defaultUserId = JWTAuth::user()->id;
 
         $updatedItems = array_map(function ($item) use ($defaultUserId) {
-            dd(array_merge($item, ['user_id' => $defaultUserId]));
-            return;
             return array_merge($item, ['user_id' => $defaultUserId]);
         }, $items);
 

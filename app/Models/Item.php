@@ -14,7 +14,9 @@ class Item extends Model
     protected $fillable = [
         'name',
         'cost',
-        'user_id'
+        'user_id',
+        'qtn',
+        'item_unit_id'
     ];
 
     protected $keyType = 'string';
