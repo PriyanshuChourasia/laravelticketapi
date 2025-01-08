@@ -15,12 +15,16 @@ class ItemResource extends SuccessResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        return array_filter([
             'name' => $this->name,
             'cost' => $this->cost,
             'qauntity' => $this->qtn,
             'item_unit' => $this->item_unit?->name,
-            'alias' => $this->item_unit?->alias
-        ];
+            'unit_alias' => $this->item_unit?->alias,
+            'item_group' => $this->item_group?->name,
+            'group_alias' => $this->item_group?->alias
+        ], function ($value) {
+            return $value != null;
+        });
     }
 }
