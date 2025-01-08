@@ -17,13 +17,20 @@ class Item extends Model
         'cost',
         'user_id',
         'qtn',
-        'item_unit_id'
+        'item_unit_id',
+        'item_group_id'
     ];
 
     public function item_unit(): BelongsTo
     {
         return $this->belongsTo(ItemUnit::class, 'item_unit_id', 'id');
     }
+
+    public function item_group(): BelongsTo
+    {
+        return $this->belongsTo(ItemGroup::class, 'item_group_id', 'id');
+    }
+
 
     protected $keyType = 'string';
     public $incrementing = false;
