@@ -26,6 +26,7 @@ class ItemStoreRequest extends FormRequest
             'items' => ['required', 'array'],
             'items.*.name' => ['string', "required", "max:255"],
             'items.*.cost' => ['numeric', 'required'],
+            'items.*.item_unit_id' => ['nullable', 'string'],
             "items.*.user_id" => ['string', 'nullable']
         ];
     }
@@ -35,9 +36,12 @@ class ItemStoreRequest extends FormRequest
         $items = $this->input('items', []);
 
         $defaultUserId = JWTAuth::user()->id;
+        $itemUnitDefault = '7deaed0e-08c7-44d5-8eb2-56037e682bc0';
 
-        $updatedItems = array_map(function ($item) use ($defaultUserId) {
-            return array_merge($item, ['user_id' => $defaultUserId]);
+        $updatedItems = array_map(function ($a) use ($defaultUserId, $itemUnitDefault) {
+            $a += ['item_unit_id' => $itemUnitDefault];
+            $a += ['user_id' => $defaultUserId];
+            return $a;
         }, $items);
 
         $this->merge(['items' => $updatedItems]);
