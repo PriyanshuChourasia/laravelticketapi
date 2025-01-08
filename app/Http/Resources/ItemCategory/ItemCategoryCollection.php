@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\ItemGroup;
+namespace App\Http\Resources\ItemCategory;
 
 use App\Http\Resources\Success\SuccessCollection;
 use Illuminate\Http\Request;
 
-class ItemGroupCollection extends SuccessCollection
+class ItemCategoryCollection extends SuccessCollection
 {
     /**
      * Transform the resource collection into an array.

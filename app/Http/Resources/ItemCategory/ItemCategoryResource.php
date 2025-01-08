@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\ItemGroup;
+namespace App\Http\Resources\ItemCategory;
 
 use App\Http\Resources\Success\SuccessResource;
 use Illuminate\Http\Request;
 
-class ItemGroupResource extends SuccessResource
+class ItemCategoryResource extends SuccessResource
 {
     /**
      * Transform the resource into an array.
@@ -14,10 +14,12 @@ class ItemGroupResource extends SuccessResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        return array_filter([
             'id' => $this->id,
             'name' => $this->name,
             'alias' => $this->alias
-        ];
+        ], function ($value) {
+            return $value !== null;
+        });
     }
 }

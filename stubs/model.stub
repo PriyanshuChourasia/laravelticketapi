@@ -4,8 +4,25 @@ namespace {{ namespace }};
 
 {{ factoryImport }}
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class {{ class }} extends Model
 {
     {{ factory }}
+    use HasUuids, SoftDeletes;
+
+    protected $fillable=[];
+
+    protected $keyType = 'string';
+    public $incrementing = false;
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function($model){
+            $model->id = Str::uuid();
+        });
+    }
 }

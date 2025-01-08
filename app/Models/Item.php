@@ -18,7 +18,8 @@ class Item extends Model
         'user_id',
         'qtn',
         'item_unit_id',
-        'item_group_id'
+        'item_group_id',
+        'item_categories_id'
     ];
 
     public function item_unit(): BelongsTo
@@ -29,6 +30,11 @@ class Item extends Model
     public function item_group(): BelongsTo
     {
         return $this->belongsTo(ItemGroup::class, 'item_group_id', 'id');
+    }
+
+    public function item_categories(): BelongsTo
+    {
+        return $this->belongsTo(ItemCategory::class, 'item_categories_id', 'id');
     }
 
 

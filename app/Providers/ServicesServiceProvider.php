@@ -40,5 +40,8 @@ class ServicesServiceProvider extends ServiceProvider
         $this->app->bind(IUserService::class, UserService::class);
 
         $this->app->bind(IItemGroupService::class, ItemGroupService::class);
-    }
+    
+ $this->app->bind(ItemCategoryService::class);
+
+                }
 }

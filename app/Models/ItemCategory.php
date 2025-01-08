@@ -1,18 +1,20 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
-class {{ class }} extends Pivot
+class ItemCategory extends Model
 {
-    //
     use HasUuids, SoftDeletes;
-    
-    protected $fillable=[];
+
+    protected $fillable = [
+        'name',
+        'alias'
+    ];
 
     protected $keyType = 'string';
     public $incrementing = false;
@@ -20,7 +22,7 @@ class {{ class }} extends Pivot
     public static function boot()
     {
         parent::boot();
-        static::creating(function($model){
+        static::creating(function ($model) {
             $model->id = Str::uuid();
         });
     }

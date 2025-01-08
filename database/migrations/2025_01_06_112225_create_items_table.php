@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('cost');
             $table->string('qtn')->comment('quantity')->default('1');
             $table->foreignUuid('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignUuid('item_group_id')->references('id')->on('item_groups')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignUuid('item_group_id')->nullable()->references('id')->on('item_groups')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignUuid('item_unit_id')->nullable()->references('id')->on('item_units')->onUpdate('cascade')->nullOnUpdate()->onDelete('cascade')->nullOnDelete();
+            $table->foreignUuid('item_categories_id')->nullable()->references('id')->on('item_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
