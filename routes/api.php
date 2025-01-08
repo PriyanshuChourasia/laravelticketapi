@@ -7,10 +7,10 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemUnitController;
 use App\Http\Controllers\StatusTypeController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\VerifyToken;
-use App\Models\CategoryType;
 
 /**
  * The example api
@@ -42,6 +42,11 @@ Route::group(['middleware' => [VerifyToken::class]], function () {
         Route::get('/refresh', [AuthController::class, 'respondWithNewTokens']);
         Route::get('/profile', [AuthController::class, 'profile']);
     });
+
+    // User Update Controller
+    Route::apiResource('users', UserController::class);
+
+
     Route::apiResource('user_types', UserTypeController::class);
     Route::apiResource('status_types', StatusTypeController::class);
 

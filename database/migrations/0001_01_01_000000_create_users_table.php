@@ -16,12 +16,13 @@ return new class extends Migration
             $table->string('firstName')->nullable();
             $table->string('lastName')->nullable();
             $table->string('username');
+            $table->string('profile_path')->nullable();
             $table->string('email')->unique();
-            $table->foreignUuid('user_type_id')->references('id')->on('user_types')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phoneNumber')->nullable();
             $table->string('password');
             $table->string('createdBy')->nullable();
+            $table->foreignUuid('user_type_id')->references('id')->on('user_types')->onUpdate('cascade')->onDelete('cascade');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

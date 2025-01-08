@@ -44,14 +44,14 @@ class AuthController extends BaseController
         if (!$token) {
 
             $response = [
-                'message' => 'Unauthorized',
-                'error' => 'Check your credentials',
+                'message' => 'Check your credentials',
+                'error' => 'Unauthorized',
                 'status' => 401
             ];
 
             return response()->json([
-                'error' => $response,
-                'success' => true
+                'errors' => $response,
+                'success' => false
             ], 401);
         }
 
