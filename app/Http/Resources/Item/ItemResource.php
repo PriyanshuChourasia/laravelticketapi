@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Item;
 
+use App\Http\Resources\ItemUnit\ItemUnitResource;
 use App\Http\Resources\Success\SuccessResource;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,10 @@ class ItemResource extends SuccessResource
     {
         return [
             'name' => $this->name,
-            'cost' => $this->cost
+            'cost' => $this->cost,
+            'qauntity' => $this->qtn,
+            'item_unit' => $this->item_unit?->name,
+            'alias' => $this->item_unit?->alias
         ];
     }
 }

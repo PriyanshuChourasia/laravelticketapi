@@ -27,6 +27,7 @@ class ItemStoreRequest extends FormRequest
             'items.*.name' => ['string', "required", "max:255"],
             'items.*.cost' => ['numeric', 'required'],
             'items.*.item_unit_id' => ['nullable', 'string'],
+            'items.*.qtn' => ['nullable', 'string'],
             "items.*.user_id" => ['string', 'nullable']
         ];
     }

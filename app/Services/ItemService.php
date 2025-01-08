@@ -12,12 +12,13 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class ItemService implements IItemService
 {
+    protected $itemLoader = ['item_unit'];
     /**
      *   Return a listing of resource
      */
     public function getAll()
     {
-        return new ItemCollection(Item::all());
+        return new ItemCollection(Item::with($this->itemLoader)->get()->sortByDesc('created_at'));
     }
 
 

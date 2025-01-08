@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -15,6 +16,12 @@ class ItemUnit extends Model
         'name',
         'alias'
     ];
+
+
+    public function parentUnit(): BelongsTo
+    {
+        return $this->belongsTo(ItemUnit::class, 'item_unit_id', 'id');
+    }
 
 
     protected $keyType = 'string';
