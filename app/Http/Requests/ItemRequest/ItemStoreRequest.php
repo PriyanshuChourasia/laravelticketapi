@@ -23,6 +23,8 @@ class ItemStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "group" => ['nullable', 'string', 'max:255'],
+            "category" => ['nullable', 'string'],
             'items' => ['required', 'array'],
             'items.*.name' => ['string', "required", "max:255"],
             'items.*.cost' => ['numeric', 'required'],

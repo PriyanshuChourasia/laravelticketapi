@@ -11,17 +11,13 @@ use Illuminate\Http\Request;
 
 class StatusTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         return new StatusTypeCollection(StatusType::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreStatusTypeRequest $storeStatusTypeRequest)
     {
         $data = $storeStatusTypeRequest->validated();
@@ -29,17 +25,13 @@ class StatusTypeController extends Controller
         return new StatusTypeResource($status);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(StatusType $statusType)
     {
         return new StatusTypeResource($statusType);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateStatusTypeRequest $updateStatusTypeRequest, StatusType $statusType)
     {
         $data = $updateStatusTypeRequest->validated();
@@ -47,9 +39,7 @@ class StatusTypeController extends Controller
         return new StatusTypeResource($statusType);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(StatusType $statusType)
     {
         $statusType->delete();
