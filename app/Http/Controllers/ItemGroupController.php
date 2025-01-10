@@ -15,11 +15,10 @@ class ItemGroupController extends Controller
         $this->itemGroupService = $itemGroupService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->itemGroupService->getAll();
+        return $this->itemGroupService->getAll($request);
     }
-
 
     public function store(ItemGroupStoreRequest $request)
     {

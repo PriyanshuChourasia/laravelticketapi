@@ -13,7 +13,8 @@ class ItemGroup extends Model
 
     protected $fillable = [
         'name',
-        'alias'
+        'alias',
+        'created_by'
     ];
 
 

@@ -4,27 +4,38 @@ namespace App\Services;
 
 use App\Http\Requests\ItemGroup\ItemGroupStoreRequest;
 use App\Http\Requests\ItemGroup\ItemGroupUpdateRequest;
+use App\Http\Resources\Item\ItemCollection;
 use App\Http\Resources\ItemGroup\ItemGroupCollection;
 use App\Http\Resources\ItemGroup\ItemGroupResource;
 use App\Models\ItemGroup;
 use App\Services\Interfaces\IItemGroupService;
-
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class ItemGroupService implements IItemGroupService
 {
-    /**
-     *   Return a listing of resource
-     */
-    public function getAll()
+
+    public function getAll(Request $request)
     {
-        return new ItemGroupCollection(ItemGroup::all());
+        if ($request->query() !== []) {
+            $params = $request->query();
+            if (array_diff_key($params, ['user_id' => '']) !== []) {
+                throw ValidationException::withMessages(['param other than user_id not allowed'], 401);
+            }
+
+            $userId = $request->query('user_id');
+
+            $data = ItemGroup::where('created_by', '=', $userId)->get();
+            return new ItemGroupCollection($data);
+        } else {
+            return new ItemGroupCollection(ItemGroup::all());
+        }
     }
 
 
 
-    /**
-     *   Get a new resource by Id
-     */
     public function getById(string $id)
     {
         $data = ItemGroup::findOrFail($id);
@@ -32,9 +43,7 @@ class ItemGroupService implements IItemGroupService
     }
 
 
-    /**
-     *   store a new resource
-     */
+
     public function store(ItemGroupStoreRequest $itemGroupStoreRequest)
     {
         $data = $itemGroupStoreRequest->validated();
@@ -43,9 +52,7 @@ class ItemGroupService implements IItemGroupService
     }
 
 
-    /**
-     *   Update resource in storage
-     */
+
     public function update(ItemGroupUpdateRequest $itemGroupUpdateRequest, string $id)
     {
         $data = ItemGroup::findOrFail($id);
@@ -57,9 +64,6 @@ class ItemGroupService implements IItemGroupService
 
 
 
-    /**
-     *   Delete a specified resource
-     */
     public function destroy(string $id)
     {
         $data = ItemGroup::findOrFail($id);

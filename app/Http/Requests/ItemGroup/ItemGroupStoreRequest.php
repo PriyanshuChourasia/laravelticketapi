@@ -3,6 +3,7 @@
 namespace App\Http\Requests\ItemGroup;
 
 use Illuminate\Foundation\Http\FormRequest;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class ItemGroupStoreRequest extends FormRequest
 {
@@ -23,7 +24,14 @@ class ItemGroupStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'alias' => ['nullable', 'string', 'max:255']
+            'alias' => ['nullable', 'string', 'max:255'],
+            'created_by' => ['nullable', 'uuid']
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $user_id = JWTAuth::user()->id;
+        $this->merge(['created_by' => $user_id]);
     }
 }
